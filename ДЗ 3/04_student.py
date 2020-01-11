@@ -10,5 +10,12 @@
 #   Студенту надо попросить ХХХ.ХХ рублей
 
 educational_grant, expenses = 10000, 12000
-
+k = 0
+spros = 0
+rost: int = expenses
+while k < 10:
+    k += 1
+    spros += rost - educational_grant
+    rost += rost*0.03
+    print(round(spros))
 # TODO здесь ваш код

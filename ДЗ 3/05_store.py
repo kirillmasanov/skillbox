@@ -29,7 +29,15 @@ store = {
         {'quantity': 43, 'price': 97},
     ],
 }
-
+# ============================================================
+for number in goods:
+    item = goods[number]
+    sum = 0
+    kol = 0
+    for i in store[item]:
+        sum += i['quantity'] * i['price']
+        kol += i['quantity']
+    print(f'{number} - {kol} шт, стоимость {sum} руб')
 # Рассчитать на какую сумму лежит каждого товара на складе.
 #
 # Вывести суммарную стоимость каждого товара на складе c помощью циклов
