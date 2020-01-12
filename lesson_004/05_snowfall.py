@@ -1,14 +1,10 @@
 # -*- coding: utf-8 -*-
-
-import simple_draw as sd
-
+from random import randint
 
 # На основе кода из практической части реализовать снегопад:
 # - создать списки данных для отрисовки N снежинок
 # - нарисовать падение этих N снежинок
 # - создать список рандомных длинн лучей снежинок (от 10 до 100) и пусть все снежинки будут разные
-
-N = 20
 
 # Пригодятся функции
 # sd.get_point()
@@ -18,11 +14,41 @@ N = 20
 # sd.user_want_exit()
 
 # TODO здесь ваш код
+import simple_draw as sd
+
+snowflake = []
+
+
+def create(n):
+    for _ in range(n):
+        x = sd.random_number(0, 500)
+        y = sd.random_number(100, 700)
+        snowflake.append([x, y])
+
+
+def draw(color):
+    snowflakes_length = 15
+    for i in snowflake:
+        sd.snowflake(sd.get_point(i[0], i[1]), color=color, length=snowflakes_length)
+
+
+def move():
+    for i in snowflake:
+        if i[1] < 10:
+            sd.snowflake(sd.get_point(i[0], i[1]), color=sd.COLOR_WHITE, length=15)
+            i[1] = 600
+            continue
+        i[1] -= 9
+        i[0] += sd.random_number(-10, 10)
+
+
+create(30)
 while True:
-    sd.clear_screen()
-    pass
-    pass
-    pass
+    sd.start_drawing()
+    draw(sd.background_color)
+    move()
+    draw(sd.COLOR_WHITE)
+    sd.finish_drawing()
     sd.sleep(0.1)
     if sd.user_want_exit():
         break
@@ -40,7 +66,7 @@ sd.pause()
 
 # 4) Усложненное задание (делать по желанию)
 # - сделать рандомные отклонения вправо/влево при каждом шаге
-# - сделать сугоб внизу экрана - если снежинка долетает до низа, оставлять её там,
+# - сделать сугроб внизу экрана - если снежинка долетает до низа, оставлять её там,
 #   и добавлять новую снежинку
 # Результат решения см https://youtu.be/XBx0JtxHiLg
 
