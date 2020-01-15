@@ -4,5 +4,9 @@
 # Формат: В комнате room_1 живут: ...
 
 # TODO здесь ваш код
+import room_1, room_2
 
+for i in room_1.folks:
+    print(i)
 
+print(room_2.folks[0])

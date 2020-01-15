@@ -7,6 +7,14 @@
 
 # TODO здесь ваш код
 
+# from district.central_street.house2 import room1, room2
+import district.central_street.house1.room1
+import district.central_street.house1.room2
+import district.central_street.house2.room1
+import district.central_street.house2.room2
 
+print(district.central_street.house1.room1.folks)
+print(district.central_street.house1.room2.folks)
 
-
+print(district.central_street.house2.room1.folks)
+print(district.central_street.house2.room2.folks)
