@@ -44,3 +44,21 @@
 # Точнее, в этом случае важен принцип единственной ответственности - https://goo.gl/rYb3hT
 
 # TODO здесь ваш код...
+from mastermind_engine import make_number, check_number
+from termcolor import cprint, colored
+
+while True:
+    make_number()
+    k = 0
+    while True:
+        k += 1
+        user_number = input(colored('Введите число:', color='yellow'))
+        rez = check_number(user_number=user_number)
+        cprint(f'Быков - {rez["bulls"]}, коров - {rez["cows"]}', color='green')
+        if list(check_number(user_number=user_number).values())[0] == 4:
+            cprint(f'Вы отгодали за {k} ходов!', color='cyan')
+            break
+    more = input(colored('Хотите ли еще парти? - ', color='yellow'))
+    if more == 'нет':
+        break
+

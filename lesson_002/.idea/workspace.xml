@@ -1,7 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="570c792b-b4b8-4982-916c-0e1955808a3f" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../.idea/skillbox.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/skillbox.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lesson_001/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/../lesson_001/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lesson_005/probe.py" beforeDir="false" afterPath="$PROJECT_DIR$/../lesson_005/probe.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="GithubDefaultAccount">
     <option name="defaultAccountId" value="2b3e44e0-82ae-4bcf-a0f9-0691dedc50ce" />
   </component>
   <component name="ProjectId" id="1W7CZN4xpU99MH9hU4MFoA6NbaD" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="570c792b-b4b8-4982-916c-0e1955808a3f" name="Default Changelist" comment="" />
+      <created>1579203175174</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1579203175174</updated>
+    </task>
+    <servers />
+  </component>
 </project>
