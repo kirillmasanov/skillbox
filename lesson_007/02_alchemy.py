@@ -19,7 +19,114 @@
 #   print(Water(), '+', Air(), '=', Water() + Air())
 #   print(Fire(), '+', Air(), '=', Fire() + Air())
 
-# TODO здесь ваш код
+
+class Water:
+    def __init__(self):
+        self.name = 'Вода'
+
+    def __add__(self, other):
+        if str(other) == str(Air().name):
+            return Storm()
+        elif str(other) == str(Fire().name):
+            return Steam()
+        elif str(other) == str(Earth().name):
+            return Mud()
+
+    def __str__(self):
+        return self.name
+
+
+class Air:
+    def __init__(self):
+        self.name = 'Воздух'
+
+    def __str__(self):
+        return self.name
+
+    def __add__(self, other):
+        if str(other) == str(Water().name):
+            return Storm()
+        elif str(other) == str(Fire().name):
+            return Lightning()
+        elif str(other) == str(Earth().name):
+            return Dust()
+
+class Fire:
+    def __init__(self):
+        self.name = 'Огонь'
+
+    def __str__(self):
+        return self.name
+
+    def __add__(self, other):
+        if str(other) == str(Water().name):
+            return Steam()
+        elif str(other) == str(Air().name):
+            return Lightning()
+        elif str(other) == str(Earth().name):
+            return Lava()
+
+class Earth:
+    def __init__(self):
+        self.name = 'Земля'
+
+    def __str__(self):
+        return self.name
+
+    def __add__(self, other):
+        if str(other) == str(Water().name):
+            return Mud()
+        elif str(other) == str(Air().name):
+            return Dust()
+        elif str(other) == str(Fire().name):
+            return Lava()
+
+class Storm:
+    def __init__(self):
+        self.name = 'Шторм'
+
+    def __str__(self):
+        return self.name
+
+
+class Steam:
+    def __init__(self):
+        self.name = 'Пар'
+
+    def __str__(self):
+        return self.name
+
+class Mud:
+    def __init__(self):
+        self.name = 'Грязь'
+
+    def __str__(self):
+        return self.name
+
+class Lightning:
+    def __init__(self):
+        self.name = 'Молния'
+
+    def __str__(self):
+        return self.name
+
+class Dust:
+    def __init__(self):
+        self.name = 'Пыль'
+
+    def __str__(self):
+        return self.name
+
+class Lava:
+    def __init__(self):
+        self.name = 'Лава'
+
+    def __str__(self):
+        return self.name
+
+print(Water(), '+', Air(), '=', Water() + Air())
+print(Fire(), '+', Air(), '=', Fire() + Air())
+
 
 # Усложненное задание (делать по желанию)
 # Добавить еще элемент в игру.
