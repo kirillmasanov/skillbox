@@ -18,11 +18,12 @@ class Snowflake:
         x = sd.random_number(100, 1100)
         y = sd.random_number(550, 595)
         self.snowflakes.append([x, y])
+        self.color = sd.COLOR_WHITE
+        self.snowflakes_length = 15
 
-    def draw(self, color):
-        snowflakes_length = 15
+    def draw(self):
         for i in self.snowflakes:
-            sd.snowflake(sd.get_point(i[0], i[1]), color=color, length=snowflakes_length)
+            sd.snowflake(sd.get_point(i[0], i[1]), color=self.color, length=self.snowflakes_length)
 
     @staticmethod
     def clear_previous_picture():
@@ -50,7 +51,7 @@ flake = Snowflake()
 while True:
     flake.clear_previous_picture()
     flake.move()
-    flake.draw(color=sd.COLOR_WHITE)
+    flake.draw()
     if not flake.can_fall():
         break
     sd.sleep(0.1)
