@@ -27,12 +27,12 @@ class Child(Parent):
     def method(self):
         print(self.class_var_1)
         print(self._class_var_2)
-        # print(self.__class_var_3)
+        print(self.__class_var_3)
         print(self.var_1)
         print(self._var_2)
-        # print(self.__var_3)
+        print(self.__var_3)
 
 
 obj = Child()
-# obj.parent_method()
+obj.parent_method()
 obj.method()
