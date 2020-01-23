@@ -117,7 +117,7 @@ class Human:
 class Child(Human):
 
     def __init__(self, name):
-        self.name = name
+        super().__init__(name)
         self.fullness = 100
 
     def __str__(self):
