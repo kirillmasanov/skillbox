@@ -45,52 +45,99 @@ from random import randint
 class House:
 
     def __init__(self):
-        pass
-
-
-class Husband:
-
-    def __init__(self):
-        pass
+        self.money = 100
+        self.food = 50
+        self.dust = 0
 
     def __str__(self):
-        return super().__str__()
+        return f'Дом: деньги {self.money}, еда - {self.food}, пыль - {self.dust}'
 
-    def act(self):
-        pass
+
+class Human:
+    def __init__(self, name):
+        self.name = name
+        self.fullness = 30
+        self.happiness = 100
+        self.earn_money = 0
+        self.food_eaten = 0
+        self.coats = 0
+
+    def __str__(self):
+        return f'{self.name} - сытость {self.fullness}, счастье {self.happiness}'
 
     def eat(self):
-        pass
+        food_quan = randint(20, 30)
+        self.fullness += food_quan
+        home.food -= food_quan
+        self.food_eaten += food_quan
+        return print(f'{self.name} поел!')
+
+
+class Husband(Human):
 
     def work(self):
-        pass
+        self.earn_money += 150
+        home.money += 150
+        self.fullness -= 10
+        return print(f'{self.name} сходил на работу!')
 
     def gaming(self):
-        pass
-
-
-class Wife:
-
-    def __init__(self):
-        pass
-
-    def __str__(self):
-        return super().__str__()
+        self.happiness += 20
+        self.fullness -= 10
+        return print(f'{self.name} играл в WoT!')
 
     def act(self):
-        pass
+        if home.dust > 90:
+            self.happiness -= 10
+        if self.fullness < 0:
+            return cprint(f'{self.name} умер от голода!', color='yellow')
+        if self.happiness < 10:
+            return cprint(f'{self.name} умер от депрессии!', color='yellow')
+        if self.fullness < 40 and home.food > 5:
+            self.eat()
+        elif home.money < 100:
+            self.work()
+        else:
+            self.gaming()
 
-    def eat(self):
-        pass
+
+class Wife(Human):
 
     def shopping(self):
-        pass
+        home.money -= 40
+        home.food += 40
+        self.fullness -= 10
+        return print(f'{self.name} сходила в магазин!')
 
     def buy_fur_coat(self):
-        pass
+        self.happiness += 60
+        home.money -= 350
+        self.fullness -= 10
+        self.coats += 1
+        return print(f'{self.name} купила шубу!')
 
     def clean_house(self):
-        pass
+        self.fullness -= 10
+        home.dust -= randint(50, 100)
+        return print(f'{self.name} убралась в доме!')
+
+    def act(self):
+        dice = randint(1, 4)
+        if self.fullness < 0:
+            return cprint(f'{self.name} умер от голода!', color='yellow')
+        if self.happiness < 10:
+            return cprint(f'{self.name} умер от депрессии!', color='yellow')
+        if home.dust > 90:
+            self.happiness -= 10
+            self.clean_house()
+        elif self.fullness < 40 and home.food > 5:
+            self.eat()
+        elif home.food < 100:
+            self.shopping()
+        elif dice == 1:
+            self.buy_fur_coat()
+        else:
+            self.shopping()
 
 
 home = House()
@@ -99,13 +146,17 @@ masha = Wife(name='Маша')
 
 for day in range(365):
     cprint('================== День {} =================='.format(day), color='red')
+    home.dust += 5
     serge.act()
     masha.act()
     cprint(serge, color='cyan')
     cprint(masha, color='cyan')
     cprint(home, color='cyan')
+cprint(f'Заработано - {serge.earn_money}, \
+съедено еды - {serge.food_eaten + masha.food_eaten}, куплено шуб - {masha.coats}', color='magenta')
 
 # TODO после реализации первой части - отдать на проверку учителю
+
 
 ######################################################## Часть вторая
 #
