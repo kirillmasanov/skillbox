@@ -48,9 +48,46 @@ class House:
         self.money = 100
         self.food = 50
         self.dust = 0
+        self.cat_food = 30
 
     def __str__(self):
         return f'Дом: деньги - {self.money}, еда - {self.food}, пыль - {self.dust}'
+
+
+class Cat:
+
+    def __init__(self, name):
+        self.name = name
+        self.fullness = 30
+
+    def __str__(self):
+        return f'{self.name} - сытость {self.fullness}'
+
+    def eat(self):
+        cat_food_quon = randint(1, 10)
+        home.cat_food -= cat_food_quon
+        self.fullness += cat_food_quon * 2
+        return print(f'{self.name} поел!')
+
+    def sleep(self):
+        self.fullness -= 10
+        return print(f'{self.name} спал весь день!')
+
+    def soil(self):
+        self.fullness -= 10
+        home.dust += 5
+        return print(f'{self.name} драл обои!')
+
+    def act(self):
+        dice = randint(1, 5)
+        if self.fullness < 0:
+            return cprint(f'{self.name} умер от голода!', color='yellow')
+        if dice == 1:
+            self.sleep()
+        elif dice == 2:
+            self.soil()
+        else:
+            self.eat()
 
 
 class Human:
@@ -71,6 +108,10 @@ class Human:
         home.food -= food_quan
         self.food_eaten += food_quan
         return print(f'{self.name} поел!')
+
+    def pet_the_cat(self):
+        self.happiness += 5
+        return print(f'{self.name} погладил кота!')
 
 
 class Child(Human):
@@ -109,7 +150,13 @@ class Husband(Human):
         self.fullness -= 10
         return print(f'{self.name} играл в WoT!')
 
+    def buy_cat_food(self):
+        home.money -= 30
+        home.cat_food += 30
+        return print(f'{self.name} купил кошачий корм!')
+
     def act(self):
+        dice = randint(1, 2)
         if home.dust > 90:
             self.happiness -= 10
         if self.fullness < 0:
@@ -120,8 +167,12 @@ class Husband(Human):
             self.eat()
         elif home.money < 100:
             self.work()
-        else:
+        elif home.cat_food <= 30:
+            self.buy_cat_food()
+        elif dice == 1:
             self.gaming()
+        else:
+            self.pet_the_cat()
 
 
 class Wife(Human):
@@ -159,6 +210,8 @@ class Wife(Human):
             self.shopping()
         elif dice == 1 and home.money > 350:
             self.buy_fur_coat()
+        elif dice == 2:
+            self.pet_the_cat()
         else:
             self.shopping()
 
@@ -166,6 +219,7 @@ class Wife(Human):
 home = House()
 serge = Husband(name='Сережа')
 masha = Wife(name='Маша')
+barsik = Cat(name='Барсик')
 kolya = Child(name='Коля')
 
 for day in range(365):
@@ -174,13 +228,16 @@ for day in range(365):
     serge.act()
     masha.act()
     kolya.act()
+    barsik.act()
     cprint(serge, color='cyan')
     cprint(masha, color='cyan')
     cprint(kolya, color='cyan')
+    cprint(barsik, color='cyan')
     cprint(home, color='cyan')
 
 cprint(f'Заработано - {serge.earn_money}, \
 съедено еды - {serge.food_eaten + masha.food_eaten}, куплено шуб - {masha.coats}', color='magenta')
+
 
 # TODO после реализации первой части - отдать на проверку учителю
 
@@ -266,7 +323,6 @@ cprint(f'Заработано - {serge.earn_money}, \
 #     cprint(masha, color='cyan')
 #     cprint(kolya, color='cyan')
 #     cprint(murzik, color='cyan')
-
 
 # Усложненное задание (делать по желанию)
 #
