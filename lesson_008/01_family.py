@@ -52,6 +52,22 @@ class House:
     def __str__(self):
         return f'Дом: деньги {self.money}, еда - {self.food}, пыль - {self.dust}'
 
+class Cat:
+
+    def __init__(self):
+        pass
+
+    def act(self):
+        pass
+
+    def eat(self):
+        pass
+
+    def sleep(self):
+        pass
+
+    def soil(self):
+        pass
 
 class Human:
     def __init__(self, name):
@@ -183,22 +199,7 @@ cprint(f'Заработано - {serge.earn_money}, \
 # Если кот дерет обои, то грязи становится больше на 5 пунктов
 
 
-class Cat:
 
-    def __init__(self):
-        pass
-
-    def act(self):
-        pass
-
-    def eat(self):
-        pass
-
-    def sleep(self):
-        pass
-
-    def soil(self):
-        pass
 
 
 ######################################################## Часть вторая бис
