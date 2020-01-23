@@ -3,6 +3,7 @@
 from termcolor import cprint
 from random import randint
 
+
 ######################################################## Часть первая
 #
 # Создать модель жизни небольшой семьи.
@@ -48,26 +49,47 @@ class House:
         self.money = 100
         self.food = 50
         self.dust = 0
+        self.cat_food = 30
 
     def __str__(self):
         return f'Дом: деньги {self.money}, еда - {self.food}, пыль - {self.dust}'
 
+
 class Cat:
 
-    def __init__(self):
-        pass
+    def __init__(self, name):
+        self.name = name
+        self.fullness = 30
 
-    def act(self):
-        pass
+    def __str__(self):
+        return f'{self.name} - сытость {self.fullness}'
 
     def eat(self):
-        pass
+        cat_food_quon = randint(1, 10)
+        home.cat_food -= cat_food_quon
+        self.fullness += cat_food_quon * 2
+        return print(f'{self.name} поел!')
 
     def sleep(self):
-        pass
+        self.fullness -= 10
+        return print(f'{self.name} спал весь день!')
 
     def soil(self):
-        pass
+        self.fullness -= 10
+        home.dust += 5
+        return print(f'{self.name} драл обои!')
+
+    def act(self):
+        dice = randint(1, 5)
+        if self.fullness < 0:
+            return cprint(f'{self.name} умер от голода!', color='yellow')
+        if dice == 1:
+            self.sleep()
+        elif dice == 2:
+            self.soil()
+        else:
+            self.eat()
+
 
 class Human:
     def __init__(self, name):
@@ -88,6 +110,10 @@ class Human:
         self.food_eaten += food_quan
         return print(f'{self.name} поел!')
 
+    def pet_the_cat(self):
+        self.happiness += 5
+        return print(f'{self.name} погладил кота!')
+
 
 class Husband(Human):
 
@@ -102,7 +128,13 @@ class Husband(Human):
         self.fullness -= 10
         return print(f'{self.name} играл в WoT!')
 
+    def buy_cat_food(self):
+        home.money -= 30
+        home.cat_food += 30
+        return print(f'{self.name} купил кошачий корм!')
+
     def act(self):
+        dice = randint(1, 2)
         if home.dust > 90:
             self.happiness -= 10
         if self.fullness < 0:
@@ -113,8 +145,12 @@ class Husband(Human):
             self.eat()
         elif home.money < 100:
             self.work()
-        else:
+        elif home.cat_food <= 30:
+            self.buy_cat_food()
+        elif dice == 1:
             self.gaming()
+        else:
+            self.pet_the_cat()
 
 
 class Wife(Human):
@@ -152,6 +188,8 @@ class Wife(Human):
             self.shopping()
         elif dice == 1:
             self.buy_fur_coat()
+        elif dice == 2:
+            self.pet_the_cat()
         else:
             self.shopping()
 
@@ -159,17 +197,21 @@ class Wife(Human):
 home = House()
 serge = Husband(name='Сережа')
 masha = Wife(name='Маша')
+barsik = Cat(name='Барсик')
 
 for day in range(365):
     cprint('================== День {} =================='.format(day), color='red')
     home.dust += 5
     serge.act()
     masha.act()
+    barsik.act()
     cprint(serge, color='cyan')
     cprint(masha, color='cyan')
+    cprint(barsik, color='cyan')
     cprint(home, color='cyan')
 cprint(f'Заработано - {serge.earn_money}, \
 съедено еды - {serge.food_eaten + masha.food_eaten}, куплено шуб - {masha.coats}', color='magenta')
+
 
 # TODO после реализации первой части - отдать на проверку учителю
 
@@ -197,9 +239,6 @@ cprint(f'Заработано - {serge.earn_money}, \
 # Степень сытости не должна падать ниже 0, иначе кот умрет от голода.
 #
 # Если кот дерет обои, то грязи становится больше на 5 пунктов
-
-
-
 
 
 ######################################################## Часть вторая бис
@@ -258,7 +297,6 @@ for day in range(365):
     cprint(kolya, color='cyan')
     cprint(murzik, color='cyan')
 
-
 # Усложненное задание (делать по желанию)
 #
 # Сделать из семьи любителей котов - пусть котов будет 3, или даже 5-10.
@@ -280,4 +318,3 @@ for day in range(365):
 #       for salary in range(50, 401, 50):
 #           max_cats = life.experiment(salary)
 #           print(f'При зарплате {salary} максимально можно прокормить {max_cats} котов')
-
