@@ -21,7 +21,31 @@
 # Упорядочивание по частоте - по убыванию. Ширину таблицы подберите по своему вкусу
 # Требования к коду: он должен быть готовым к расширению функциональности. Делать сразу на классах.
 
-# TODO здесь ваш код
+
+def scan_book(book_name):
+    with open(book_name, 'r', encoding='cp1251') as file:
+        my_dict = {}
+        print(f'+{"+":-^20}+')
+        print(f'|{"буква": ^9}|{"частота": ^10}|')
+        print(f'+{"+":-^20}+')
+        for line in file:
+            for char in line:
+                if char.isalpha():
+                    if char not in my_dict:
+                        my_dict[char] = 1
+                    else:
+                        my_dict[char] += 1
+    sum_rate = 0
+    sort_key = sorted(my_dict)
+    for key in sort_key:
+        print(f'|{key: ^9}|{my_dict[key]: ^10}|')
+        sum_rate += my_dict[key]
+    print(f'+{"+":-^20}+')
+    print(f'|{"итого": ^9}|{sum_rate: ^10}|')
+    print(f'+{"+":-^20}+')
+
+
+scan_book('voyna-i-mir.txt')
 
 # После выполнения первого этапа нужно сделать упорядочивание статистики
 #  - по частоте по возрастанию
