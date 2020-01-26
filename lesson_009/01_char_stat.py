@@ -26,41 +26,49 @@ class CharStat:
 
     def __init__(self, file_name):
         self.file_name = file_name
+        self.my_dict = {}
+        self.sorted_key = []
+        self.rate = []
 
     def dict_word(self):
         with open(self.file_name, 'r', encoding='cp1251') as file:
-            my_dict = {}
             for line in file:
                 for char in line:
                     if char.isalpha():
-                        if char not in my_dict:
-                            my_dict[char] = 1
+                        if char not in self.my_dict:
+                            self.my_dict[char] = 1
                         else:
-                            my_dict[char] += 1
-        return my_dict
+                            self.my_dict[char] += 1
 
     def sort_key_alpha_up(self):
-        sort_key = sorted(self.dict_word())
-        return sort_key
+        self.sorted_key = sorted(self.my_dict)
 
-    def print_dict(self, sort_key, my_dict):
+    def sort_key_alpha_down(self):
+        self.sorted_key = sorted(self.my_dict, reverse=True)
+
+    # def sort_rate_up(self):
+    #     for value in self.my_dict.values():
+    #         self.rate.append(value)
+    #     sorted(self.rate)
+
+    def print_dict(self):
         sum_rate = 0
         print(f'+{"+":-^20}+')
         print(f'|{"буква": ^9}|{"частота": ^10}|')
         print(f'+{"+":-^20}+')
-        for key in sort_key:
-            print(f'|{key: ^9}|{my_dict[key]: ^10}|')
-            sum_rate += my_dict[key]
+        for key in self.sorted_key:
+            print(f'|{key: ^9}|{self.my_dict[key]: ^10}|')
+            sum_rate += self.my_dict[key]
         print(f'+{"+":-^20}+')
         print(f'|{"итого": ^9}|{sum_rate: ^10}|')
         print(f'+{"+":-^20}+')
 
 
 book1 = CharStat(file_name='voyna-i-mir.txt')
-my_dict = book1.dict_word()
-
-sort_key = book1.sort_key_alpha_up()
-book1.print_dict(sort_key=sort_key, my_dict=my_dict)
+book1.dict_word()
+# book1.sort_key_alpha_down()
+book1.sort_key_alpha_up()
+book1.print_dict()
 
 
 
