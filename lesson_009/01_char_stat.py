@@ -46,10 +46,8 @@ class CharStat:
     def sort_key_alpha_down(self):
         self.sorted_key = sorted(self.my_dict, reverse=True)
 
-    # def sort_rate_up(self):
-    #     for value in self.my_dict.values():
-    #         self.rate.append(value)
-    #     sorted(self.rate)
+    def sort_rate_up(self):
+        self.rate = sorted(list(self.my_dict.values()))
 
     def print_dict(self):
         sum_rate = 0
@@ -63,14 +61,28 @@ class CharStat:
         print(f'|{"итого": ^9}|{sum_rate: ^10}|')
         print(f'+{"+":-^20}+')
 
+    def print_dict_rate(self):
+        sum_rate = 0
+        print(f'+{"+":-^20}+')
+        print(f'|{"буква": ^9}|{"частота": ^10}|')
+        print(f'+{"+":-^20}+')
+        for value in self.rate:
+            for key in self.my_dict:
+                if self.my_dict[key] == value:
+                    print(f'|{key: ^9}|{value: ^10}|')
+                    sum_rate += value
+        print(f'+{"+":-^20}+')
+        print(f'|{"итого": ^9}|{sum_rate: ^10}|')
+        print(f'+{"+":-^20}+')
+
 
 book1 = CharStat(file_name='voyna-i-mir.txt')
 book1.dict_word()
 # book1.sort_key_alpha_down()
-book1.sort_key_alpha_up()
-book1.print_dict()
-
-
+# book1.sort_key_alpha_up()
+# book1.print_dict()
+book1.sort_rate_up()
+book1.print_dict_rate()
 
 
 # После выполнения первого этапа нужно сделать упорядочивание статистики
