@@ -20,9 +20,10 @@
 # Требования к коду: он должен быть готовым к расширению функциональности. Делать сразу на классах.
 
 
-class LogParser_min:
-    def __init__(self, file_name):
+class LogParserMin:
+    def __init__(self, file_name, file_output):
         self.file_name = file_name
+        self.file_output = file_output
         self.dict_min = {}
 
     def calc_file(self):
@@ -34,12 +35,13 @@ class LogParser_min:
                     else:
                         self.dict_min[line[:17] + ']'] += 1
 
-    def print_dict_min(self):
-        for key, value in self.dict_min.items():
-            print(f'{key} {value}')
+    def print_dict(self):
+        with open(self.file_output, 'w') as file:
+            for key, value in self.dict_min.items():
+                file.write(f'{key} {value}\n')
 
 
-class LogParserHour(LogParser_min):
+class LogParserHour(LogParserMin):
     def calc_file(self):
         with open(self.file_name, 'r', encoding='utf8') as file:
             for line in file:
@@ -50,7 +52,7 @@ class LogParserHour(LogParser_min):
                         self.dict_min[line[:14] + ']'] += 1
 
 
-class LogParserMonth(LogParser_min):
+class LogParserMonth(LogParserMin):
     def calc_file(self):
         with open(self.file_name, 'r', encoding='utf8') as file:
             for line in file:
@@ -61,7 +63,7 @@ class LogParserMonth(LogParser_min):
                         self.dict_min[line[:8] + ']'] += 1
 
 
-class LogParserYear(LogParser_min):
+class LogParserYear(LogParserMin):
     def calc_file(self):
         with open(self.file_name, 'r', encoding='utf8') as file:
             for line in file:
@@ -72,9 +74,9 @@ class LogParserYear(LogParser_min):
                         self.dict_min[line[:5] + ']'] += 1
 
 
-my_parser = LogParserYear(file_name='events.txt')
+my_parser = LogParserHour(file_name='events.txt', file_output='events_output.txt')
 my_parser.calc_file()
-my_parser.print_dict_min()
+my_parser.print_dict()
 
 # После выполнения первого этапа нужно сделать группировку событий
 #  - по часам
