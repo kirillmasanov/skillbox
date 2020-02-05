@@ -6,13 +6,14 @@
 
 def get_prime_numbers(n):
     prime_numbers = []
-    for number in range(2, n+1):
+    for number in range(2, n + 1):
         for prime in prime_numbers:
             if number % prime == 0:
                 break
         else:
             prime_numbers.append(number)
     return prime_numbers
+
 
 # Часть 1
 # На основе алгоритма get_prime_numbers создать класс итерируемых обьектов,
@@ -22,11 +23,32 @@ def get_prime_numbers(n):
 
 
 class PrimeNumbers:
-    pass
-    # TODO здесь ваш код
+    def __init__(self, n):
+        self.prime_numbers = []
+        self.n = n
+        self.i = 0
+
+    def __iter__(self):
+        self.i = 1
+        return self
+
+    def get_prime_numbers(self):
+        self.i += 1
+        for prime in self.prime_numbers:
+            if self.i % prime == 0:
+                return False
+        return True
+
+    def __next__(self):
+        while self.i < self.n:
+            if self.get_prime_numbers():
+                self.prime_numbers.append(self.i)
+                return self.i
+        else:
+            raise StopIteration()
 
 
-prime_number_iterator = PrimeNumbers(n=10000)
+prime_number_iterator = PrimeNumbers(n=1000)
 for number in prime_number_iterator:
     print(number)
 
@@ -38,13 +60,18 @@ for number in prime_number_iterator:
 
 
 def prime_numbers_generator(n):
-    pass
-    # TODO здесь ваш код
+    prime_numbers = []
+    for number in range(2, n + 1):
+        for prime in prime_numbers:
+            if number % prime == 0:
+                break
+        else:
+            prime_numbers.append(number)
+            yield number
 
 
-for number in prime_numbers_generator(n=10000):
+for number in prime_numbers_generator(n=10):
     print(number)
-
 
 # Часть 3
 # Написать несколько функций-фильтров, которые выдает True, если число:
@@ -61,3 +88,41 @@ for number in prime_numbers_generator(n=10000):
 # простых счастливых палиндромных чисел и так далее. Придумать не менее 2х способов.
 #
 # Подсказка: возможно, нужно будет добавить параметр в итератор/генератор.
+
+import math
+
+
+def lucky_num(n):
+    sum_left = 0
+    sum_right = 0
+    half = math.floor(len(str(n)) / 2)
+    for i in range(0, half):
+        sum_left += int(str(n)[i])
+        sum_right += int(str(n)[-i - 1])
+    if sum_left == sum_right:
+        return True
+    else:
+        return False
+
+
+def palindrom(n):
+    left_num = 0
+    right_num = 0
+    half = math.floor(len(str(n)) / 2)
+    for i in range(0, half):
+        left_num += int(str(n)[i])
+        right_num += int(str(n)[-i - 1])
+        if left_num != right_num:
+            return False
+    return True
+
+my_numbers = 1234222, 3334333, 34567
+result = filter(lucky_num, my_numbers)
+print(list(result))
+
+print(palindrom(12345654321))
+
+for number in prime_numbers_generator(n=1000):
+    result = lucky_num(number)
+    if result:
+        print(number)
