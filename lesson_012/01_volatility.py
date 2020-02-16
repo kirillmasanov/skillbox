@@ -81,6 +81,9 @@ import time
 
 class Volatility:
 
+    volatility_dict = defaultdict()
+    null_dict = defaultdict()
+
     def __init__(self, file_name):
         self.file_name = file_name
         self.volatility = 0
@@ -103,6 +106,12 @@ class Volatility:
                     self.max_price = price
             self.average_price = self.sum_price / self.count
             self.volatility = ((self.max_price - self.min_price) / self.average_price) * 100
+
+        f_name = os.path.basename(self.file_name)[:-4]
+        if self.volatility == 0:
+            Volatility.null_dict[f_name] = round(self.volatility, 2)
+        else:
+            Volatility.volatility_dict[f_name] = round(self.volatility, 2)
 
 
 def make_file_list(scan_folder):
@@ -128,16 +137,11 @@ def time_track(func, *args, **kwargs):
 def main():
     file_list = make_file_list('trades')
     volatilities = [Volatility(file_name=file) for file in file_list]
-    volatility_dict = defaultdict()
-    null_dict = defaultdict()
+
     for ff in volatilities:
         ff.run()
-        f_name = os.path.basename(ff.file_name)[:-4]
-        if ff.volatility == 0:
-            null_dict[f_name] = round(ff.volatility, 2)
-        else:
-            volatility_dict[f_name] = round(ff.volatility, 2)
-    sort_dict = sorted(volatility_dict.items(), key=lambda kv: kv[1], reverse=True)
+
+    sort_dict = sorted(Volatility.volatility_dict.items(), key=lambda kv: kv[1], reverse=True)
     print(f'Максимальная волатильность:')
     for i in range(3):
         print(f'{sort_dict[i][0]} - {sort_dict[i][1]} %')
@@ -145,7 +149,7 @@ def main():
     for i in range(2, -1, -1):
         print(f'{sort_dict[-i - 1][0]} - {sort_dict[-i - 1][1]} %')
     print(f'Нулевая волатильность:')
-    print(', '.join(list(null_dict.keys())))
+    print(', '.join(list(Volatility.null_dict.keys())))
 
 
 if __name__ == '__main__':
