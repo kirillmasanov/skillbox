@@ -88,7 +88,6 @@ for number in prime_numbers_generator(n=10):
 # простых счастливых палиндромных чисел и так далее. Придумать не менее 2х способов.
 #
 # Подсказка: возможно, нужно будет добавить параметр в итератор/генератор.
-
 import math
 
 
@@ -115,6 +114,7 @@ def palindrom(n):
         if left_num != right_num:
             return False
     return True
+
 
 my_numbers = 1234222, 3334333, 34567
 result = filter(lucky_num, my_numbers)
