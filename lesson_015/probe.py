@@ -1,5 +1,5 @@
-from datetime import datetime, timedelta
-import time
+import csv
+from datetime import timedelta
 import json
 import re
 import sys
@@ -129,21 +129,26 @@ class DungeonRPG:
         self.list_monsters = []
 
     def run(self):
-        while True:
-            if self.key:
-                self.parse_location()
-            if len(self.list_locations) > 0 or len(self.list_monsters) > 0:
-                print(f'Вы находитесь в {self.location_name}')
-                print(f'У вас {self.current_experience} опыта и осталось {self.remaining_time} секунд')
-                print(timedelta(seconds=int(self.current_date)))
-                print(f'Внутри вы видите:')
-            for loc in self.list_monsters:
-                print(f'-- Монстра: {loc}')
-            for loc in self.list_locations:
-                print(f'-- Вход в локацию: {loc}')
-
-            self.choose_action()
-            print('*' * 50)
+        with open('dungeon.csv', 'w', newline='') as out_csv:
+            writer = csv.writer(out_csv)
+            line = ['current_location', 'current_experience', 'current_date']
+            writer.writerow(line)
+            while True:
+                if self.key:
+                    self.parse_location()
+                if len(self.list_locations) > 0 or len(self.list_monsters) > 0:
+                    print(f'Вы находитесь в {self.location_name}')
+                    print(f'У вас {self.current_experience} опыта и осталось {self.remaining_time} секунд')
+                    print(f'Прошло уже: {timedelta(seconds=int(self.current_date))}')
+                    print(f'Внутри вы видите:')
+                for loc in self.list_monsters:
+                    print(f'-- Монстра: {loc}')
+                for loc in self.list_locations:
+                    print(f'-- Вход в локацию: {loc}')
+                line = [self.location_name, self.current_experience, timedelta(seconds=int(self.current_date))]
+                writer.writerow(line)
+                self.choose_action()
+                print('*' * 50)
 
 
 rpg = DungeonRPG('rpg.json')
