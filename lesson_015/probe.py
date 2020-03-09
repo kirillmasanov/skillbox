@@ -1,6 +1,9 @@
+from datetime import datetime, timedelta
+import time
 import json
+import re
 import sys
-from pprint import pprint
+from decimal import Decimal
 
 
 class DungeonRPG:
@@ -8,6 +11,8 @@ class DungeonRPG:
     def __init__(self, file):
         self.file = file
         self.remaining_time = '1234567890.0987654321'
+        self.current_experience = 0
+        self.current_date = 0
         self.location_name = ''
         self.list_monsters = []
         self.list_locations = []
@@ -31,6 +36,17 @@ class DungeonRPG:
                 else:
                     self.list_monsters.append(val)
 
+    def time_count(self, time_object):
+        time_elapsed = Decimal(re.search(r'tm\d+', time_object)[0][2:])
+        self.remaining_time = Decimal(self.remaining_time) - time_elapsed
+        self.current_date += time_elapsed
+
+    def monster_count(self, monster_name):
+        exp_received = int(re.search(r'exp\d+', monster_name)[0][3:])
+        self.current_experience += exp_received
+        self.time_count(monster_name)
+        print(f'Получено опыта - {exp_received}, всего - {self.current_experience}')
+
     def monster_attack(self):
         if len(self.list_monsters) > 1:
             for i in range(len(self.list_monsters)):
@@ -41,6 +57,7 @@ class DungeonRPG:
             choice = 1
         monster_killed = self.list_monsters.pop(choice - 1)
         print(f'Монстр {monster_killed} повержен!')
+        self.monster_count(monster_killed)
         self.key = False
 
     def choose_action(self):
@@ -75,8 +92,6 @@ class DungeonRPG:
                 else:
                     print('Введите 1 или 2!')
 
-        # elif len(self.list_monsters) == 0 and len(self.list_locations) == 0:
-        #     print('Поздравляем вы прошли подземелье!')
         else:
             print(f'1.Атаковать монстра')
             print(f'2.Перейти в другую локацию')
@@ -109,6 +124,7 @@ class DungeonRPG:
                     self.map = pos
         self.key = True
         self.location_name = next_location
+        self.time_count(self.location_name)
         self.list_locations = []
         self.list_monsters = []
 
@@ -118,6 +134,8 @@ class DungeonRPG:
                 self.parse_location()
             if len(self.list_locations) > 0 or len(self.list_monsters) > 0:
                 print(f'Вы находитесь в {self.location_name}')
+                print(f'У вас {self.current_experience} опыта и осталось {self.remaining_time} секунд')
+                print(timedelta(seconds=int(self.current_date)))
                 print(f'Внутри вы видите:')
             for loc in self.list_monsters:
                 print(f'-- Монстра: {loc}')
